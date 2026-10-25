@@ -1,0 +1,13 @@
+# Build & Binary Artifacts
+*.exe
+*.obj
+*.o
+*.dll
+*.pdb
+*.ilk
+*.lib
+
+# Temporary / OS
+.DS_Store
+Thumbs.db
+*.log
