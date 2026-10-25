@@ -1,5 +1,14 @@
 # infinite-car-driving
 
+<p align="left">
+  <img src="https://github.com/4aru5h/infinite-car-driving/actions/workflows/build.yml/badge.svg" alt="Build Windows Binary" />
+  <img src="https://img.shields.io/badge/C%2B%2B-17-00599C?logo=cplusplus&logoColor=white" alt="C++17" />
+  <img src="https://img.shields.io/badge/OpenGL-Double--Buffered-5586A4?logo=opengl&logoColor=white" alt="OpenGL" />
+  <img src="https://img.shields.io/badge/Platform-Windows_x64-0078D6?logo=windows&logoColor=white" alt="Windows x64" />
+  <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License" />
+</p>
+
+
 A standalone 3D endless highway driving simulation written in pure C++ using native Win32 window management and double-buffered OpenGL, engineered without external game engines or third-party runtime dependencies.
 
 ---
@@ -88,6 +97,22 @@ GAME.exe
 
 ---
 
+
+---
+
+## Controls & Keybindings
+
+| Keybinding | Action |
+| :--- | :--- |
+| `W` or `↑` | Accelerate / Forward throttle |
+| `S` or `↓` | Brake / Reverse gear |
+| `A` or `←` | Steer Left |
+| `D` or `→` | Steer Right |
+| `Spacebar` | Emergency Handbrake |
+| `C` | Cycle Camera Perspective |
+| `Escape` | Exit Simulation |
+
+---
 ## Project Structure
 
 ```text
