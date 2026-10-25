@@ -1,66 +1,48 @@
-# Endless Horizon: 3D Procedural Driving Simulation in C++
+# infinite-car-driving
 
-[![Language: C++](https://img.shields.io/badge/Language-C%2B%2B-00599C.svg?logo=c%2B%2B)](https://isocpp.org/)
-[![Graphics: OpenGL](https://img.shields.io/badge/Graphics-OpenGL%20%2F%20Win32-5586A4.svg?logo=opengl)](https://www.opengl.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-
-A standalone 3D endless highway driving simulation built in pure **C++** using the **native Win32 API** and **OpenGL**, requiring zero external engine dependencies.
+A 3D endless highway driving simulation written in C++ using the native Win32 API and OpenGL. Zero external game engine dependencies.
 
 ---
 
-## 🏎️ Core Technical Features
+## Features
 
-- **Rendering Engine:** Native Win32 message loop coupled with double-buffered OpenGL rendering.
-- **Atmospheric & Lighting Pipeline:**
-  - Real-time planar road reflections modeling wet asphalt surface shaders.
-  - Spherical environment mapping (`GL_SPHERE_MAP`) simulating clearcoat automotive paint gloss.
-  - Procedural mipmapped textures for asphalt grain, city skylines, and anamorphic lens flares.
-- **Physics & Gameplay Mechanics:**
-  - Dynamic traffic generation with multi-lane density variation.
-  - Responsive vehicle inertia, acceleration, steering, and braking models.
-  - Volumetric LED beam projection with near-miss collision detection.
-- **Audio Synthesizer:** Real-time software wave synthesis via Windows Multimedia API (`winmm.lib` / `mmsystem.h`) delivering engine harmonics, turbo spool, NOS boost, and synthwave audio.
+- Native Win32 window management and double-buffered OpenGL rendering.
+- Planar reflections simulating wet asphalt road conditions.
+- Spherical environment mapping (`GL_SPHERE_MAP`) for automotive clearcoat reflections.
+- Procedural road and traffic generation with multi-lane density variations.
+- Real-time software wave synthesis via Windows Multimedia API (`winmm.lib`) for engine harmonics, turbo spool, and sound effects.
 
 ---
 
-## 🎮 Controls
+## Controls
 
-| Action | Primary Key | Secondary Key |
-| :--- | :--- | :--- |
-| **Steer Left** | `A` | `Left Arrow` |
-| **Steer Right** | `D` | `Right Arrow` |
-| **Accelerate** | `W` | `Up Arrow` |
-| **Brake / Reverse** | `S` | `Down Arrow` |
-| **Nitrous (NOS)** | `Space` | `Shift` |
-| **Change Atmosphere** | `C` | *(Cycles Day / Twilight / Rainy / Cyberpunk)* |
-| **Quit** | `Esc` | — |
+- `W` / `Up Arrow`: Accelerate
+- `S` / `Down Arrow`: Brake / Reverse
+- `A` / `Left Arrow`: Steer left
+- `D` / `Right Arrow`: Steer right
+- `Space`: Nitrous boost
+- `C`: Cycle atmospheric conditions (Day, Twilight, Rainy, Night)
+- `Esc`: Exit
 
 ---
 
-## 🛠️ Build and Compilation
+## Build
 
-### Prerequisites
-- Windows OS (x86_64)
-- Microsoft Visual C++ (`cl.exe`) or MinGW-w64 (`g++`)
-- OpenGL and Windows Multimedia libraries (`opengl32.lib`, `glu32.lib`, `winmm.lib`)
+Requires Windows, an x86_64 C++ compiler, OpenGL, and standard Windows multimedia libraries.
 
-### Building with MinGW (g++):
+### MinGW (g++):
 ```bash
 g++ main.cpp -o GAME.exe -lopengl32 -lglu32 -lwinmm -mwindows -O2
 ./GAME.exe
 ```
 
-### Building with MSVC:
-Run the included build script:
+### MSVC:
 ```cmd
 build.bat
-```
-Or via Developer Command Prompt:
-```cmd
-cl /O2 /Fe:GAME.exe main.cpp opengl32.lib glu32.lib winmm.lib user32.lib gdi32.lib
 ```
 
 ---
 
-## 📜 License
-Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for details.
+## License
+
+MIT
