@@ -1,48 +1,106 @@
 # infinite-car-driving
 
-A 3D endless highway driving simulation written in C++ using the native Win32 API and OpenGL. Zero external game engine dependencies.
+A standalone 3D endless highway driving simulation written in pure C++ using native Win32 window management and double-buffered OpenGL, engineered without external game engines or third-party runtime dependencies.
 
 ---
 
-## Features
+## Technical Architecture
 
-- Native Win32 window management and double-buffered OpenGL rendering.
-- Planar reflections simulating wet asphalt road conditions.
-- Spherical environment mapping (`GL_SPHERE_MAP`) for automotive clearcoat reflections.
-- Procedural road and traffic generation with multi-lane density variations.
-- Real-time software wave synthesis via Windows Multimedia API (`winmm.lib`) for engine harmonics, turbo spool, and sound effects.
+```text
++-------------------------------------------------------------------------+
+|                              Win32 Event Loop                           |
+|      (Window Creation, Raw Keystroke Processing, High-Res Timers)       |
++-------------------------------------------------------------------------+
+                                     |
+         +---------------------------+---------------------------+
+         |                                                       |
+         v                                                       v
++-------------------------------+               +---------------------------------+
+|      OpenGL Render Engine     |               |    Procedural Audio Synthesizer |
+|  - Double-buffered contexts   |               |  - Windows Multimedia API       |
+|  - Planar asphalt reflections |               |  - Frequency-modulated sine     |
+|  - Spherical reflection maps  |               |    waves for engine harmonics   |
+|  - Dynamic day/rain/night fog |               |  - Band-limited noise synthesis |
++-------------------------------+               |    for tire skid and turbo      |
+         |                                      +---------------------------------+
+         v                                                       |
++-------------------------------+                                v
+| Procedural Highway & Traffic  |                       Direct Audio Output
+|  - Dynamic segment streaming  |                          (waveOutWrite)
+|  - Multi-lane AI state machine|
+|  - AABB collision detection   |
++-------------------------------+
+```
+
+### 1. Graphics & Rendering Engine
+- **Platform Management:** Native Win32 API (`CreateWindowEx`, message pump dispatch) eliminating runtime abstraction overhead.
+- **Double-Buffered Contexts:** WGL context initialization with depth buffering (`GL_DEPTH_TEST`), dynamic lighting models, and smooth shading.
+- **Planar Asphalt Reflections:** Multi-pass rendering simulating wet asphalt road conditions using reflection matrices and surface blending.
+- **Spherical Clearcoat Mapping:** Hardware texture generation via `GL_SPHERE_MAP` to produce dynamic specular automotive highlights across the vehicle geometry.
+- **Atmospheric Simulations:** Configurable atmospheric presets (Day, Twilight, Rainy, Night) controlling ambient illumination, diffuse falloff, and exponential distance fog (`GL_EXP2`).
+
+### 2. Procedural World Generation & Traffic AI
+- **Endless Chunk Recycling:** Generates and recycles highway segment meshes in front of and behind the player position, maintaining stable memory consumption.
+- **Autonomous Vehicle State Machines:** Procedural traffic generation with speed variance, lane-selection logic, and responsive braking when closing in on surrounding vehicles.
+- **Physics & Collision:** Bounding box (AABB) intersection detection for collision response and lane boundary constraints.
+
+### 3. Real-Time Software Audio Wave Synthesis
+- **Zero Third-Party Audio Dependencies:** Built using the Windows Multimedia API (`winmm.lib`) and low-level PCM audio streaming (`waveOutWrite`).
+- **Engine RPM Modeling:** Real-time frequency-modulated sine waveform generation synthesizing internal combustion engine harmonics that scale dynamically with acceleration and gear ratios.
+- **Turbo & Friction Effects:** Algorithmic noise synthesis modeling turbo spooling pressure releases and asphalt tire friction.
 
 ---
 
-## Controls
+## Simulation Controls
 
-- `W` / `Up Arrow`: Accelerate
-- `S` / `Down Arrow`: Brake / Reverse
-- `A` / `Left Arrow`: Steer left
-- `D` / `Right Arrow`: Steer right
-- `Space`: Nitrous boost
-- `C`: Cycle atmospheric conditions (Day, Twilight, Rainy, Night)
-- `Esc`: Exit
+| Key | Action |
+| :--- | :--- |
+| `W` / `Up Arrow` | Accelerate engine |
+| `S` / `Down Arrow` | Apply brakes / Reverse |
+| `A` / `Left Arrow` | Steer left |
+| `D` / `Right Arrow` | Steer right |
+| `Space` | Engage nitrous oxide boost |
+| `C` | Cycle atmospheric conditions (Day, Twilight, Rainy, Night) |
+| `Esc` | Terminate simulation |
 
 ---
 
-## Build
+## Compilation & Execution
 
-Requires Windows, an x86_64 C++ compiler, OpenGL, and standard Windows multimedia libraries.
+Requires Windows (x86_64), a standard C++ compiler, OpenGL, and core Windows multimedia libraries.
 
-### MinGW (g++):
+### MinGW (GCC):
 ```bash
 g++ main.cpp -o GAME.exe -lopengl32 -lglu32 -lwinmm -mwindows -O2
 ./GAME.exe
 ```
 
-### MSVC:
+### Microsoft Visual Studio (MSVC):
+Open the Developer Command Prompt and execute:
 ```cmd
 build.bat
+```
+Or compile directly:
+```cmd
+cl /O2 /EHsc main.cpp opengl32.lib glu32.lib winmm.lib user32.lib gdi32.lib
+GAME.exe
+```
+
+---
+
+## Project Structure
+
+```text
+infinite-car-driving/
+├── main.cpp         # Complete Win32 windowing, OpenGL rendering, and audio synthesizer
+├── build.bat        # MSVC automated compilation script
+├── .gitignore       # Build artifacts and executable filter rules
+├── LICENSE          # MIT License
+└── README.md        # Technical architecture and user guide
 ```
 
 ---
 
 ## License
 
-MIT
+Distributed under the [MIT License](LICENSE).
